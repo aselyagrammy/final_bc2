@@ -2,108 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Blockchain Donations</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donations</title>
-    <script src="nav.js"></script>
+
+    <!-- Correct Ethers.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
             text-align: center;
+            padding: 40px;
+            background-color: #f9f9f9;
         }
 
         nav {
-            background: #2c386c;
+            background-color: #2c386c;
             padding: 10px;
         }
 
         nav a {
             color: white;
-            text-decoration: none;
             margin: 0 15px;
+            text-decoration: none;
             font-size: 18px;
         }
 
-        h2 {
-            margin-top: 20px;
-        }
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
+        h1, h2 {
+            margin-top: 30px;
         }
 
         form {
             background: white;
             max-width: 400px;
-            margin: 20px auto;
+            margin: 30px auto;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
-        label {
-            font-weight: bold;
+        label, input, button {
             display: block;
-            margin-top: 10px;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 16px;
         }
 
         input {
-            width: 100%;
             padding: 10px;
-            margin: 5px 0;
+            border-radius: 6px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; /* Учитываем padding и border в ширине */
-            font-size: 16px;
         }
 
         button {
-            background: #2c386c;
+            padding: 12px;
+            background-color: #2c386c;
             color: white;
             border: none;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
             font-weight: bold;
-            padding: 12px;
-            border-radius: 5px;
-            display: block;
-            width: 100%;
-            margin-top: 10px;
         }
 
         button:hover {
-            background: #45a049;
+            background-color: #45a049;
         }
 
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .tx-link {
+            margin-top: 20px;
+            font-size: 14px;
         }
 
-        th, td {
-            border: 1px solid black;
-            padding: 12px;
-            text-align: left;
+        .error {
+            color: red;
+            margin-top: 15px;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .success {
+            color: green;
+            margin-top: 15px;
         }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
     </style>
 </head>
 <body>
@@ -111,131 +89,69 @@
     <a href="index.html">Home</a>
     <a href="projects.html">My Projects</a>
     <a href="profile.html">Profile</a>
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
 </nav>
 
-<h2>Make a Donation</h2>
-<form id="donateForm">
-    <label for="amount">Amount:</label>
-    <input type="number" id="amount" required>
+<h1>Donate with MetaMask</h1>
+<p>Support our project by donating Ethereum directly through MetaMask.</p>
 
-    <button type="submit">Donate</button>
+<form id="donateForm">
+    <label for="amount">Amount (ETH):</label>
+    <input type="number" id="amount" step="0.0001" required />
+    <button type="submit">Donate with MetaMask</button>
 </form>
 
-<h2>All Donations</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Donor</th>
-        <th>Email</th>
-        <th>Project</th>
-        <th>Amount</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody id="donationsTable"></tbody>
-</table>
+<div class="tx-link" id="txStatus"></div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert('You must be logged in to access this page.');
-            window.location.href = 'login.html';
-        }
+    const recipientAddress = '0x3e600fdecB08aBb9868Df390E0D94Ed5Bc106F56';
 
-        fetchDonations();
-
-        function checkAuth() {
-            const isAuthenticated = localStorage.getItem("token"); // Example: Check if token exists
-            const navbar = document.querySelector(".navbar");
-
-            if (isAuthenticated) {
-                // Hide Register and Login links
-                document.querySelector('a[href="register.html"]').style.display = "none";
-                document.querySelector('a[href="login.html"]').style.display = "none";
-
-                // Create and add Logout button
-                const logoutButton = document.createElement("a");
-                logoutButton.href = "#";
-                logoutButton.innerText = "Logout";
-                logoutButton.style.marginLeft = "15px";
-                logoutButton.onclick = function () {
-                    localStorage.removeItem("token"); // Remove token
-                    window.location.reload(); // Refresh page
-                };
-
-                navbar.appendChild(logoutButton);
-            }
-        }
-
-        checkAuth();
-
-    });
-
-    function getProjectIdFromUrl() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get("projectId"); // Get projectId from URL
-    }
-
-
-    document.getElementById('donateForm').addEventListener('submit', async (e) => {
+    document.getElementById('donateForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const token = localStorage.getItem('token');
-        if (!token) return alert('You need to login first.');
-        const projectid = getProjectIdFromUrl();
 
-        const amount = parseFloat(document.getElementById('amount').value); // Приводим к числу
+        const ethAmount = document.getElementById('amount').value;
+        const txStatus = document.getElementById('txStatus');
+        txStatus.innerHTML = '';
 
-        if (isNaN(amount) || amount <= 0) {
-            return alert('Invalid donation amount');
+        if (!window.ethereum) {
+            alert('MetaMask is not installed. Please install it to continue.');
+            return;
         }
-        const donationData = {
-            projectId: projectid,
-            amount: amount
-        };
 
-        const res = await fetch('/api/donations', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-            body:  JSON.stringify(donationData)
-        });
+        if (!ethAmount || parseFloat(ethAmount) <= 0) {
+            alert('Please enter a valid amount.');
+            return;
+        }
 
-        const data = await res.json();
-        if (res.ok) {
-            alert('Donation successful!');
-            fetchDonations();
-        } else {
-            alert(data.message || 'Failed to donate.');
+        try {
+            await ethereum.request({ method: 'eth_requestAccounts' });
+
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+
+            const network = await provider.getNetwork();
+            console.log("Connected to network:", network.name);
+
+            const tx = await signer.sendTransaction({
+                to: recipientAddress,
+                value: ethers.utils.parseEther(ethAmount)
+            });
+
+            console.log("Transaction sent:", tx);
+            txStatus.innerHTML = `
+                <div class="success">✅ Transaction sent!</div>
+                <a href="https://etherscan.io/tx/${tx.hash}" target="_blank">View on Etherscan</a>
+            `;
+        } catch (error) {
+            console.error("Transaction error:", error);
+
+            const message =
+                error?.data?.message ||
+                error?.message ||
+                'An unknown error occurred.';
+
+            txStatus.innerHTML = `<div class="error">❌ Transaction failed: ${message}</div>`;
         }
     });
-
-
-    async function fetchDonations() {
-
-            const res = await fetch('/api/donations', {
-                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-            });
-            const data = await res.json();
-            const table = document.getElementById('donationsTable');
-            table.innerHTML = '';
-
-            data.forEach(donation => {
-                const row = `<tr>
-                    <td>${donation.donor.username}</td>
-                    <td>${donation.donor.email}</td>
-                    <td>${donation.project ? donation.project.title : 'N/A'}</td>
-                    <td>$${donation.amount}</td>
-                    <td>${new Date(donation.createdAt).toLocaleString()}</td>
-                </tr>`;
-                table.innerHTML += row;
-            });
-
-       }
 </script>
 </body>
 </html>

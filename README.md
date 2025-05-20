@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Crowdfunding System
 
 ## Project Overview
@@ -382,3 +383,7 @@ For any inquiries or contributions, reach out to:
 - **Ermukhanov Daulet**
 
 Thank you very much!
+=======
+# final_bc2
+team members: Amirov Bekzat SE-2324, Ermukhanov Daulet SE-2324, Zhumakhanova Asselya SE-2323.
+>>>>>>> 65207eb9986087eadd25552327e65e42554fc76a
