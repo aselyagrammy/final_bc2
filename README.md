@@ -1,389 +1,103 @@
-<<<<<<< HEAD
-# Crowdfunding System
+Конечно, вот полностью готовый `README.md` файл на английском языке, без смайликов и в формате, который можно сразу вставить в `README.md`:
 
-## Project Overview
-The Crowdfunding System is a Node.js-based web application that allows users to create, manage, and contribute to crowdfunding projects. The system supports user authentication, project creation, and donation tracking.
+````markdown
+# Kazakhstan Constitution: AI Assistant with On-Chain Vector Storage
+
+This project is an MVP of an AI assistant that answers questions about the Constitution of the Republic of Kazakhstan. It uses large language models (LLMs), Streamlit for the user interface, and blockchain (Ethereum or Solana) for storing vector embeddings.
 
 ## Features
-- User authentication (signup, login, JWT-based authentication)
-- Admin management for projects and users
-- Project creation, updating, and deletion
-- Donation functionality
-- Secure password hashing
-- Middleware-based access control
+
+- Loads and processes the full text of the Constitution of Kazakhstan
+- Indexes the content using a vector store
+- Answers user questions via an LLM (OpenAI or Gemini)
+- Saves vector embeddings on-chain (Ethereum or Solana)
+- Simple and intuitive interface built with Streamlit
 
 ## Technologies Used
-- **Node.js** (Express.js for backend framework)
-- **MongoDB** (Mongoose for database operations)
-- **JWT** (JSON Web Tokens for authentication)
-- **Bcrypt.js** (for password encryption)
-- **Dotenv** (for environment variables)
 
-## Setup Instructions
-### Prerequisites
-- Install **Node.js** (v14+ recommended)
-- Install **MongoDB** and set up a database
+- Python 3.10+
+- Streamlit
+- LangChain or LlamaIndex
+- OpenAI / Gemini API
+- FAISS or ChromaDB
+- Solidity or Rust (for blockchain integration)
+- IPFS (optional)
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/bekzxt/nodejs_crowdfunding.git
-   cd nodejs_crowdfunding
-   ```
+## Getting Started
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+### 1. Clone the repository
 
-3. Create a `.env` file in the project root with the following variables:
-   ```env
-   MONGO_URI=your_mongodb_connection_string
-   PORT=5000
-   JWT_SECRET=your_jwt_secret_key
-   ```
+```bash
+git clone https://github.com/aselyagrammy/final_bc2.git
+cd final_bc2
+````
 
-4. Start the server:
-   ```bash
-   npm start
-   ```
-   The backend will run on `http://localhost:5000`.
+### 2. Create and activate a virtual environment
 
-# Crowdfunding System API Documentation
-
-### Authentication
-
-#### Register a User
-**Endpoint:** `POST /api/auth/register`
-
-**Request Body:**
-```json
-{
-  "username": "exampleUser",
-  "email": "user@example.com",
-  "password": "securePassword123"
-}
+```bash
+python -m venv venv
+source venv/bin/activate      # macOS/Linux
+venv\Scripts\activate         # Windows
 ```
 
-**Response:**
-```json
-{
-  "message": "User registered successfully"
-}
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
 ```
 
-#### Login a User
-**Endpoint:** `POST /api/auth/login`
+### 4. Set up environment variables
 
-**Request Body:**
-```json
-{
-  "email": "user@example.com",
-  "password": "securePassword123"
-}
+Create a `.env` file in the root directory and add your API keys:
+
+```env
+OPENAI_API_KEY=your_openai_key
+GEMINI_API_KEY=your_gemini_key
 ```
 
-**Response:**
-```json
-{
-  "token": "jwt_token_here"
-}
+### 5. Run the Streamlit app
+
+```bash
+streamlit run app.py
 ```
 
-### User Management
+### 6. (Optional) Deploy the smart contract
 
-#### Get User Profile
-**Endpoint:** `GET /api/users/profile`
+For Ethereum:
 
-**Headers:**
-```json
-{
-  "Authorization": "Bearer jwt_token_here"
-}
+* Use Hardhat or Remix to deploy `EmbeddingsStorage.sol`
+* Make sure you have MetaMask and test ETH in the Holesky testnet
+
+For Solana:
+
+* Install `solana-cli` and `anchor`
+* Run deployment using `anchor deploy`
+
+## Project Structure
+
+```
+final_bc2/
+├── app.py                  # Streamlit application
+├── constitution/           # Text files of the Constitution
+├── blockchain/             # Smart contracts (Solidity or Rust)
+├── embeddings/             # Embedding logic and storage
+├── utils/                  # Helper functions
+├── requirements.txt        # Python dependencies
+└── README.md
 ```
 
-**Response:**
-```json
-{
-   "_id": "UserID",
-   "username": "User",
-   "email": "User@example.com",
-   "role": "user",
-   "createdAt": "2025-02-25T14:51:07.610Z",
-   "updatedAt": "2025-02-25T14:51:07.610Z",
-   "__v": 0
-}
-```
+## Future Improvements
 
-#### Update User Profile
-**Endpoint:** `PUT /api/users/profile`
+* Add support for chat history
+* User authentication and profile management
+* Store embeddings in IPFS
+* Visualize constitutional content by article or topic
 
-**Headers:**
-```json
-{
-  "Authorization": "Bearer jwt_token_here"
-}
-```
-
-**Request Body:**
-```json
-{
-  "username": "newUsername",
-  "email": "newemail@example.com",
-  "password": "newPassword"
-}
-```
-
-**Response:**
-```json
-{
-   "message": "Profile updated successfully",
-   "user": {
-      "_id": "UserID",
-      "username": "newUsername",
-      "email": "newemail@example.com",
-      "password": "$2b$10$eP42QMCaBOF/WBi6V77h9eCO3B0PfkdNDFqVNVgDgNOPdd78dejX6",
-      "role": "user",
-      "createdAt": "2025-02-25T14:51:07.610Z",
-      "updatedAt": "2025-02-25T14:59:22.692Z",
-      "__v": 0
-   }
-}
-```
-
-### Projects
-
-#### Create a Project
-**Endpoint:** `POST /api/projects`
-
-**Headers:**
-```json
-{
-  "Authorization": "Bearer jwt_token_here"
-}
-```
-
-**Request Body:**
-```json
-{
-  "title": "Project Name",
-  "description": "Detailed description of the project",
-  "goal": 10000
-}
-```
-
-**Response:**
-```json
-{
-   "title": "Project Name",
-   "description": "Detailed description of the project",
-   "goal": 10000,
-   "raised": 0,
-   "creator": "UserID",
-   "_id": "ProjectID",
-   "createdAt": "2025-02-25T15:00:54.954Z",
-   "updatedAt": "2025-02-25T15:00:54.954Z",
-   "__v": 0
-}
-```
-
-#### Get All Projects
-**Endpoint:** `GET /api/projects`
-
-**Response:**
-```json
-{
-   "_id": "ProjectID",
-   "title": "Project Name",
-   "description": "Detailed description of the project",
-   "goal": 10000,
-   "raised": 0,
-   "creator": {
-      "_id": "UserID",
-      "username": "newUsername",
-      "email": "newemail@example.com"
-   },
-   "createdAt": "2025-02-25T15:00:54.954Z",
-   "updatedAt": "2025-02-25T15:00:54.954Z",
-   "__v": 0
-}
-```
-
-#### Get a Specific Project
-**Endpoint:** `GET /api/projects/:id`
-
-**Response:**
-```json
-{
-   "_id": "ProjectID",
-   "title": "Project Name",
-   "description": "Detailed description of the project",
-   "goal": 10000,
-   "raised": 0,
-   "creator": {
-      "_id": "UserID",
-      "username": "newUsername",
-      "email": "newemail@example.com"
-   },
-   "createdAt": "2025-02-25T15:00:54.954Z",
-   "updatedAt": "2025-02-25T15:00:54.954Z",
-   "__v": 0
-}
-```
-
-#### Update a Project (Owner Only)
-**Endpoint:** `PUT /api/projects/:id`
-
-**Headers:**
-```json
-{
-  "Authorization": "Bearer jwt_token_here"
-}
-```
-
-**Request Body:**
-```json
-{
-  "title": "Updated Project Name",
-  "description": "Updated description",
-  "goal": 15000
-}
-```
-
-**Response:**
-```json
-{
-   "_id": "ProjectID",
-   "title": "Updated Project Name",
-   "description": "Updated description",
-   "goal": 15000,
-   "raised": 0,
-   "creator": "UserID",
-   "createdAt": "2025-02-25T15:00:54.954Z",
-   "updatedAt": "2025-02-25T15:04:14.066Z",
-   "__v": 0
-}
-```
-
-#### Delete a Project (Owner Only)
-**Endpoint:** `DELETE /api/projects/:id`
-
-**Headers:**
-```json
-{
-  "Authorization": "Bearer jwt_token_here"
-}
-```
-
-**Response:**
-```json
-{
-   "message": "Project deleted"
-}
-```
-
-### Donations
-
-#### Make a Donation
-**Endpoint:** `POST /api/donations`
-
-**Headers:**
-```json
-{
-  "Authorization": "Bearer jwt_token_here"
-}
-```
-
-**Request Body:**
-```json
-{
-  "projectId": "ProjectID",
-  "amount": 100
-}
-```
-
-**Response:**
-```json
-{
-   "message": "Donation successful",
-   "donation": {
-      "amount": 100,
-      "donor": "UserID",
-      "project": "ProjectID",
-      "_id": "DonationID",
-      "createdAt": "2025-02-25T15:07:17.121Z",
-      "__v": 0
-   }
-}
-```
-
-#### Get Donations for a Project
-**Endpoint:** `GET /api/donations/:projectId`
-
-**Response:**
-```json
-[
-  {
-    "id": "donationId",
-    "amount": 100,
-    "donor": {
-       "_id": "UserID",
-       "username": "example",
-       "email": "user@example.com"
-    }
-  }
-]
-```
-
-### Admin Routes
-
-#### Get All Users (Admin Only)
-**Endpoint:** `GET /api/admin/users`
-
-**Headers:**
-```json
-{
-  "Authorization": "Bearer jwt_token_here"
-}
-```
-
-**Response:**
-```json
-[
-  {
-    "id": "userId",
-    "username": "exampleUser",
-    "email": "user@example.com"
-  }
-]
-```
-
-#### Delete a User (Admin Only)
-**Endpoint:** `DELETE /api/admin/users/:id`
-
-**Headers:**
-```json
-{
-  "Authorization": "Bearer jwt_token_here"
-}
-```
-
-**Response:**
-```json
-{
-  "message": "User deleted successfully"
-}
-```
 ## License
-This project is licensed under the MIT License. Feel free to use, modify, and distribute.
 
-## Contact
-For any inquiries or contributions, reach out to:
-- **Amirov Bekzat**
-- **Ermukhanov Daulet**
+This project is licensed under the MIT License.
 
-Thank you very much!
-=======
-# final_bc2
-team members: Amirov Bekzat SE-2324, Ermukhanov Daulet SE-2324, Zhumakhanova Asselya SE-2323.
->>>>>>> 65207eb9986087eadd25552327e65e42554fc76a
+```
+
+Готово к вставке в `README.md`. Если тебе нужно сгенерировать файл `.env.example` или список зависимостей для `requirements.txt`, тоже могу помочь.
+```
