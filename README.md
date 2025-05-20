@@ -1,4 +1,3 @@
-````markdown
 # Kazakhstan Constitution: AI Assistant with On-Chain Vector Storage
 
 This project is an MVP of an AI assistant that answers questions about the Constitution of the Republic of Kazakhstan. It uses large language models (LLMs), Streamlit for the user interface, and blockchain (Ethereum or Solana) for storing vector embeddings.
@@ -94,8 +93,3 @@ final_bc2/
 ## License
 
 This project is licensed under the MIT License.
-
-```
-
-Готово к вставке в `README.md`. Если тебе нужно сгенерировать файл `.env.example` или список зависимостей для `requirements.txt`, тоже могу помочь.
-```
