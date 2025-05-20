@@ -1,95 +1,94 @@
-# Kazakhstan Constitution: AI Assistant with On-Chain Vector Storage
+# 💡 Trusted Crowdfunding Platform Using a Smart Contract
 
-This project is an MVP of an AI assistant that answers questions about the Constitution of the Republic of Kazakhstan. It uses large language models (LLMs), Streamlit for the user interface, and blockchain (Ethereum or Solana) for storing vector embeddings.
+## 📌 Overview
 
-## Features
+Traditional crowdfunding platforms often suffer from a lack of **transparency**, **accountability**, and **investor trust**. According to recent reports:
 
-- Loads and processes the full text of the Constitution of Kazakhstan
-- Indexes the content using a vector store
-- Answers user questions via an LLM (OpenAI or Gemini)
-- Saves vector embeddings on-chain (Ethereum or Solana)
-- Simple and intuitive interface built with Streamlit
+* **85%** of startups delay delivery,
+* **14%** never deliver what was promised to investors.
 
-## Technologies Used
+This project addresses those issues by leveraging **blockchain technology** to create a **trusted crowdfunding platform** where:
 
-- Python 3.10+
-- Streamlit
-- LangChain or LlamaIndex
-- OpenAI / Gemini API
-- FAISS or ChromaDB
-- Solidity or Rust (for blockchain integration)
-- IPFS (optional)
+* Investors can **track fund usage**,
+* **Smart contracts** ensure funds are **locked** and only **released on milestone progress**,
+* Fraud and misuse are drastically reduced.
 
-## Getting Started
+## 🛠️ Features
 
-### 1. Clone the repository
+* ✅ **Smart Contract-Based Escrow System**
+  Funds are held securely using smart contracts and only released when project milestones are achieved.
 
-```bash
-git clone https://github.com/aselyagrammy/final_bc2.git
-cd final_bc2
-````
+* 🔍 **Transparent Fund Flow**
+  Investors can see exactly how their funds are being used and by whom.
 
-### 2. Create and activate a virtual environment
+* 🔐 **Decentralized Trust**
+  Eliminates the need for a centralized third party — trust is managed on-chain.
 
-```bash
-python -m venv venv
-source venv/bin/activate      # macOS/Linux
-venv\Scripts\activate         # Windows
-```
+* 🌐 **MetaMask Integration**
+  Investors interact with the platform securely through their MetaMask wallets.
 
-### 3. Install dependencies
+## ⚙️ Tech Stack
 
-```bash
-pip install -r requirements.txt
-```
+* **Frontend**: HTML, CSS, JavaScript
+* **Blockchain**: Solidity (Smart Contracts), Ethereum Testnet
+* **Wallet**: MetaMask
+* **Backend**: Node.js, Express.js
+* **Development Tools**: Hardhat / Truffle, Web3.js or Ethers.js
 
-### 4. Set up environment variables
+## 🧪 How It Works
 
-Create a `.env` file in the root directory and add your API keys:
+1. A project creator submits a campaign with detailed milestones.
+2. Investors fund the project via MetaMask.
+3. Funds are locked in a smart contract.
+4. Project creators must request milestone approvals to unlock the next portion of funds.
+5. Funds are released automatically if milestones are verified.
 
-```env
-OPENAI_API_KEY=your_openai_key
-GEMINI_API_KEY=your_gemini_key
-```
+## 🧰 Tools Used
 
-### 5. Run the Streamlit app
+* [MetaMask](https://metamask.io/)
+* [Node.js](https://nodejs.org/)
+* [Solidity](https://soliditylang.org/)
+* [Hardhat](https://hardhat.org/) / [Truffle](https://trufflesuite.com/)
+* [Ethereum Testnet](https://chainlist.org/)
+* [Web3.js](https://web3js.readthedocs.io/) or [Ethers.js](https://docs.ethers.org/)
 
-```bash
-streamlit run app.py
-```
+## 🚀 Getting Started
 
-### 6. (Optional) Deploy the smart contract
+1. Clone the repository
 
-For Ethereum:
+   ```bash
+   git clone https://github.com/yourusername/trusted-crowdfunding.git
+   cd trusted-crowdfunding
+   ```
 
-* Use Hardhat or Remix to deploy `EmbeddingsStorage.sol`
-* Make sure you have MetaMask and test ETH in the Holesky testnet
+2. Install dependencies
 
-For Solana:
+   ```bash
+   npm install
+   ```
 
-* Install `solana-cli` and `anchor`
-* Run deployment using `anchor deploy`
+3. Connect MetaMask to the appropriate testnet (e.g., Goerli, Holesky).
 
-## Project Structure
+4. Compile and deploy the smart contract
 
-```
-final_bc2/
-├── app.py                  # Streamlit application
-├── constitution/           # Text files of the Constitution
-├── blockchain/             # Smart contracts (Solidity or Rust)
-├── embeddings/             # Embedding logic and storage
-├── utils/                  # Helper functions
-├── requirements.txt        # Python dependencies
-└── README.md
-```
+   ```bash
+   npx hardhat compile
+   npx hardhat run scripts/deploy.js --network goerli
+   ```
 
-## Future Improvements
+5. Start the backend server
 
-* Add support for chat history
-* User authentication and profile management
-* Store embeddings in IPFS
-* Visualize constitutional content by article or topic
+   ```bash
+   node server.js
+   ```
 
-## License
+6. Open the frontend in your browser and connect your MetaMask wallet.
 
-This project is licensed under the MIT License.
+## 👥 Team & Contribution
+
+This project was developed as part of a university blockchain course assignment. Contributions are welcome!
+
+## 📄 License
+
+MIT License
+
