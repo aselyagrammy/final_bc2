@@ -1,5 +1,3 @@
-Конечно, вот полностью готовый `README.md` файл на английском языке, без смайликов и в формате, который можно сразу вставить в `README.md`:
-
 ````markdown
 # Kazakhstan Constitution: AI Assistant with On-Chain Vector Storage
 
