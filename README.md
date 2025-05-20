@@ -86,7 +86,13 @@ This project addresses those issues by leveraging **blockchain technology** to c
 
 ## 👥 Team & Contribution
 
-This project was developed as part of a university blockchain course assignment. Contributions are welcome!
+This project was developed as part of a university blockchain course assignment.
+## Contact
+For any inquiries or contributions, reach out to:
+- Amirov Bekzat
+- Ermukhanov Daulet
+- Zhumakhanova Asselya
+
 
 ## 📄 License
 
